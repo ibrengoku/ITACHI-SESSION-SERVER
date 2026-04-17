@@ -1,1 +1,319 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITACHI-XMD | Session Generator</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#04060d;--card:#0c1120;--card2:#0f1628;--border:#1a2540;
+  --red:#e63946;--red2:#ff4757;--blue:#00d4ff;
+  --text:#8892a4;--white:#e8eaf0;--green:#00ff88;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Exo 2',sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(26,37,64,0.3) 1px,transparent 1px),linear-gradient(90deg,rgba(26,37,64,0.3) 1px,transparent 1px);background-size:60px 60px;z-index:0;pointer-events:none}
+.glow{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse 80% 50% at 20% -10%,rgba(230,57,70,0.07) 0%,transparent 60%),radial-gradient(ellipse 60% 40% at 80% 110%,rgba(0,212,255,0.04) 0%,transparent 60%);pointer-events:none}
 
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0 32px;height:60px;background:rgba(4,6,13,0.95);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nav-logo img{width:32px;height:32px;border-radius:8px;object-fit:cover;border:1px solid #7f1d1d}
+.nav-logo-txt{font-family:'Orbitron',monospace;font-weight:900;font-size:.9rem;letter-spacing:3px;color:var(--white)}
+.nav-logo-txt span{color:var(--red)}
+.nav-btn{background:var(--red);color:white;padding:8px 18px;border-radius:6px;font-family:'Exo 2',sans-serif;font-weight:700;font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;text-decoration:none;box-shadow:0 0 16px rgba(230,57,70,0.3)}
+
+/* HERO */
+.hero{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:90px 24px 60px}
+.badge{display:inline-flex;align-items:center;gap:8px;background:rgba(230,57,70,.08);border:1px solid rgba(230,57,70,.25);border-radius:100px;padding:6px 16px;font-family:'Share Tech Mono',monospace;font-size:.7rem;letter-spacing:3px;text-transform:uppercase;color:var(--red2);margin-bottom:28px}
+.dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.8s ease infinite;display:inline-block}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.hero h1{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(2.5rem,8vw,5rem);line-height:.95;color:var(--white);letter-spacing:1px;margin-bottom:8px}
+.hero h1 .r{color:var(--red);text-shadow:0 0 40px rgba(230,57,70,.5)}
+.hero h1 .v{display:block;font-size:.35em;letter-spacing:8px;color:rgba(255,255,255,.18);margin-top:10px}
+.hero-desc{font-size:1rem;line-height:1.75;color:var(--text);font-weight:300;max-width:520px;margin:24px auto 40px}
+.hero-desc strong{color:var(--white)}
+.hero-img{width:280px;max-width:85%;border-radius:16px;border:1px solid rgba(230,57,70,.2);box-shadow:0 20px 60px rgba(0,0,0,.5);margin:0 auto 40px;display:block}
+
+/* STATS */
+.stats{display:flex;gap:1px;background:var(--border);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin:0 auto;max-width:600px}
+.stat{flex:1;padding:20px 16px;background:var(--card);text-align:center}
+.stat-n{font-family:'Orbitron',monospace;font-size:1.6rem;font-weight:900;color:var(--red);line-height:1}
+.stat-l{font-size:.65rem;letter-spacing:2px;text-transform:uppercase;color:rgba(255,255,255,.22);margin-top:4px}
+
+/* FORM SECTION */
+.form-section{position:relative;z-index:1;padding:80px 24px;max-width:900px;margin:0 auto}
+.section-tag{font-family:'Share Tech Mono',monospace;font-size:.68rem;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:10px;display:block}
+.section-title{font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.8rem,4vw,2.5rem);color:var(--white);margin-bottom:8px}
+.section-sub{font-size:.95rem;color:var(--text);font-weight:300;margin-bottom:48px;line-height:1.65}
+
+.form-wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:2px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+
+/* TABS */
+.form-panel{background:var(--card);padding:40px 36px}
+.tabs{display:flex;gap:4px;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:4px;margin-bottom:28px}
+.tab-btn{flex:1;padding:10px;border-radius:6px;border:none;font-family:'Exo 2',sans-serif;font-weight:700;font-size:.82rem;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;transition:all .2s;background:transparent;color:var(--text)}
+.tab-btn.active{background:var(--red);color:white;box-shadow:0 2px 10px rgba(230,57,70,.3)}
+
+/* INPUT */
+label{display:block;font-family:'Share Tech Mono',monospace;font-size:.65rem;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px}
+input[type="text"]{width:100%;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:7px;padding:13px 15px;font-family:'Share Tech Mono',monospace;font-size:.9rem;color:var(--white);outline:none;transition:border-color .2s;margin-bottom:20px}
+input[type="text"]:focus{border-color:var(--red)}
+input::placeholder{color:rgba(255,255,255,.12)}
+
+.submit-btn{width:100%;padding:14px;border-radius:8px;background:var(--red);color:white;border:none;font-family:'Exo 2',sans-serif;font-weight:700;font-size:.9rem;letter-spacing:2px;text-transform:uppercase;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 18px rgba(230,57,70,.3);transition:all .25s}
+.submit-btn:hover{background:var(--red2);box-shadow:0 4px 28px rgba(230,57,70,.5);transform:translateY(-1px)}
+.submit-btn:disabled{opacity:.6;cursor:not-allowed;transform:none}
+
+.spin{display:none;width:16px;height:16px;border:2px solid rgba(255,255,255,.2);border-top-color:white;border-radius:50%;animation:rotate .6s linear infinite}
+@keyframes rotate{to{transform:rotate(360deg)}}
+
+/* RESULTS */
+.result-box{display:none;margin-top:14px;background:rgba(0,255,136,.03);border:1px solid rgba(0,255,136,.15);border-radius:8px;padding:15px}
+.result-box.show{display:block}
+.result-tag{font-family:'Share Tech Mono',monospace;font-size:.63rem;letter-spacing:3px;text-transform:uppercase;color:var(--green);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.result-tag::before{content:'';width:6px;height:6px;background:var(--green);border-radius:50%}
+.code-big{font-family:'Share Tech Mono',monospace;font-size:1.8rem;color:var(--white);letter-spacing:8px}
+.hint{font-size:.75rem;color:rgba(255,255,255,.22);margin-top:8px;line-height:1.5}
+.err-box{display:none;margin-top:12px;background:rgba(230,57,70,.05);border:1px solid rgba(230,57,70,.2);border-radius:7px;padding:11px 13px;font-family:'Share Tech Mono',monospace;font-size:.75rem;color:var(--red2);line-height:1.5}
+.err-box.show{display:block}
+
+/* QR */
+.qr-img-wrap{display:none;background:white;padding:14px;border-radius:10px;margin:14px auto 0;width:fit-content}
+.qr-img-wrap.show{display:block}
+.qr-img-wrap img{display:block;width:200px;height:200px}
+
+/* INFO PANEL */
+.info-panel{background:rgba(8,12,24,.95);padding:40px 36px;display:flex;flex-direction:column;justify-content:space-between}
+.info-panel h3{font-family:'Orbitron',monospace;font-weight:900;font-size:1.2rem;color:var(--white);margin-bottom:28px;letter-spacing:1px}
+.istep{display:flex;gap:12px;align-items:flex-start;margin-bottom:18px}
+.istep-n{min-width:26px;height:26px;background:rgba(230,57,70,.08);border:1px solid rgba(230,57,70,.25);border-radius:5px;display:flex;align-items:center;justify-content:center;font-family:'Share Tech Mono',monospace;font-size:.7rem;color:var(--red2);font-weight:700}
+.istep-t{font-size:.85rem;line-height:1.55;color:var(--text);font-weight:300}
+.istep-t strong{color:var(--white);font-weight:600}
+.platforms{padding-top:20px;border-top:1px solid var(--border)}
+.platforms-lbl{font-family:'Share Tech Mono',monospace;font-size:.62rem;letter-spacing:3px;text-transform:uppercase;color:var(--red);margin-bottom:10px}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{padding:4px 10px;border:1px solid var(--border);border-radius:4px;font-family:'Share Tech Mono',monospace;font-size:.7rem;color:rgba(255,255,255,.3)}
+
+/* STEPS */
+.steps-section{position:relative;z-index:1;padding:60px 24px 80px;max-width:900px;margin:0 auto}
+.steps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.step-card{background:var(--card);padding:32px 28px;position:relative;overflow:hidden}
+.step-card::after{content:'0'attr(data-n);position:absolute;top:12px;right:16px;font-family:'Orbitron',monospace;font-weight:900;font-size:3.5rem;color:rgba(230,57,70,.06);line-height:1;pointer-events:none}
+.step-icon{font-size:1.4rem;margin-bottom:16px;width:44px;height:44px;background:rgba(230,57,70,.08);border:1px solid rgba(230,57,70,.18);border-radius:10px;display:flex;align-items:center;justify-content:center}
+.step-card h3{font-family:'Orbitron',monospace;font-weight:700;font-size:.88rem;letter-spacing:1px;color:var(--white);margin-bottom:8px}
+.step-card p{font-size:.82rem;line-height:1.6;color:var(--text);font-weight:300}
+
+/* FOOTER */
+footer{position:relative;z-index:1;border-top:1px solid var(--border);padding:32px 24px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+.footer-logo{display:flex;align-items:center;gap:8px;font-family:'Orbitron',monospace;font-weight:900;font-size:1rem;letter-spacing:3px;color:var(--white)}
+.footer-logo img{width:24px;height:24px;border-radius:5px;object-fit:cover}
+.footer-logo span{color:var(--red)}
+footer p{font-size:.75rem;color:rgba(255,255,255,.18)}
+
+@media(max-width:768px){
+  nav{padding:0 16px}
+  .form-wrap{grid-template-columns:1fr}
+  .steps-grid{grid-template-columns:1fr}
+  .hero h1{font-size:2.2rem}
+  footer{flex-direction:column;text-align:center}
+}
+</style>
+</head>
+<body>
+<div class="glow"></div>
+
+<nav>
+  <a class="nav-logo" href="#">
+    <img src="https://i.ibb.co/ds0fdYCX/IMG-20260409-WA0249.jpg" alt="ITACHI-XMD">
+    <span class="nav-logo-txt">ITACHI-<span>XMD</span></span>
+  </a>
+  <a href="#session" class="nav-btn">🔑 Obtenir Session</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge"><span class="dot"></span>WhatsApp Session Generator</div>
+  <img class="hero-img" src="https://i.ibb.co/ds0fdYCX/IMG-20260409-WA0249.jpg" alt="ITACHI-XMD Bot">
+  <h1>ITACHI-<span class="r">XMD</span><span class="v">V2.0 · IBSACKO™</span></h1>
+  <p class="hero-desc">Lie ton WhatsApp <strong>une seule fois</strong>, récupère ton Session ID et déploie ton bot sur n'importe quelle plateforme — <strong>rapide et sécurisé</strong>.</p>
+  <div class="stats">
+    <div class="stat"><div class="stat-n">2</div><div class="stat-l">Méthodes</div></div>
+    <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Sécurisé</div></div>
+    <div class="stat"><div class="stat-n">24/7</div><div class="stat-l">En ligne</div></div>
+    <div class="stat"><div class="stat-n">33+</div><div class="stat-l">Commandes</div></div>
+  </div>
+</div>
+
+<!-- STEPS -->
+<div class="steps-section">
+  <span class="section-tag">// Comment ça marche</span>
+  <div class="section-title" style="font-family:'Orbitron',monospace;font-weight:900;font-size:clamp(1.6rem,4vw,2.2rem);color:var(--white);margin-bottom:32px">3 étapes simples</div>
+  <div class="steps-grid">
+    <div class="step-card" data-n="1"><div class="step-icon">📱</div><h3>Entre ton numéro</h3><p>Entre ton numéro WhatsApp complet avec l'indicatif pays, sans le +.</p></div>
+    <div class="step-card" data-n="2"><div class="step-icon">🔗</div><h3>Lie ton WhatsApp</h3><p>Entre le code de pairing dans WhatsApp → Appareils liés → Lier un appareil.</p></div>
+    <div class="step-card" data-n="3"><div class="step-icon">🚀</div><h3>Déploie partout</h3><p>Copie ton Session ID et colle-le dans ta variable SESSION_ID.</p></div>
+  </div>
+</div>
+
+<!-- SESSION FORM -->
+<div class="form-section" id="session">
+  <span class="section-tag">// Générateur de Session</span>
+  <div class="section-title">Génère ta Session</div>
+  <p class="section-sub">Connecte ton WhatsApp et récupère ton Session ID <strong>itachi~</strong> instantanément.</p>
+
+  <div class="form-wrap">
+    <!-- FORM -->
+    <div class="form-panel">
+      <div class="tabs">
+        <button class="tab-btn active" id="tab-pair" onclick="switchTab('pair')">🔑 Pair Code</button>
+        <button class="tab-btn" id="tab-qr" onclick="switchTab('qr')">📷 QR Code</button>
+      </div>
+
+      <!-- PAIR -->
+      <div id="pair-form">
+        <label>Numéro de téléphone</label>
+        <input type="text" id="phone" placeholder="ex: 224621963059" maxlength="20"/>
+        <button class="submit-btn" id="pair-btn" onclick="getPairCode()">
+          <div class="spin" id="pair-spin"></div>
+          <span id="pair-txt">⚡ OBTENIR LE CODE</span>
+        </button>
+        <div class="err-box" id="pair-err"></div>
+        <div class="result-box" id="pair-result">
+          <div class="result-tag">Code de pairing reçu</div>
+          <div class="code-big" id="pair-code">----</div>
+          <p class="hint">Entre ce code dans WhatsApp → Appareils liés → Lier un appareil<br>⏳ <strong>Ton Session ID sera envoyé dans tes messages enregistrés</strong></p>
+        </div>
+      </div>
+
+      <!-- QR -->
+      <div id="qr-form" style="display:none">
+        <button class="submit-btn" id="qr-btn" onclick="getQRCode()">
+          <div class="spin" id="qr-spin"></div>
+          <span id="qr-txt">📷 GÉNÉRER QR CODE</span>
+        </button>
+        <div class="err-box" id="qr-err"></div>
+        <div class="qr-img-wrap" id="qr-wrap">
+          <img id="qr-img" src="" alt="QR Code"/>
+        </div>
+        <div class="result-box" id="qr-hint" style="margin-top:12px">
+          <div class="result-tag">QR Code généré</div>
+          <p class="hint">Scanne ce QR dans WhatsApp → Appareils liés → Lier un appareil<br>⏳ Ton Session ID sera envoyé dans tes messages enregistrés</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFO -->
+    <div class="info-panel">
+      <div>
+        <h3>Instructions</h3>
+        <div class="istep"><div class="istep-n">01</div><div class="istep-t"><strong>Entre ton numéro</strong> avec l'indicatif pays, sans le +</div></div>
+        <div class="istep"><div class="istep-n">02</div><div class="istep-t">Clique <strong>Obtenir le Code</strong> et attends le code à 8 chiffres</div></div>
+        <div class="istep"><div class="istep-n">03</div><div class="istep-t">Ouvre <strong>WhatsApp → ⋮ → Appareils liés → Lier un appareil</strong></div></div>
+        <div class="istep"><div class="istep-n">04</div><div class="istep-t">Entre le code — ton <strong>Session ID itachi~</strong> arrive dans tes messages</div></div>
+        <div class="istep"><div class="istep-n">05</div><div class="istep-t"><strong>Copie</strong> et colle dans la variable <strong>SESSION_ID</strong> de ton bot</div></div>
+      </div>
+      <div class="platforms">
+        <div class="platforms-lbl">Plateformes</div>
+        <div class="tags">
+          <span class="tag">Railway</span><span class="tag">Render</span><span class="tag">Heroku</span><span class="tag">Koyeb</span><span class="tag">VPS</span><span class="tag">Replit</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-logo">
+    <img src="https://i.ibb.co/ds0fdYCX/IMG-20260409-WA0249.jpg" alt="logo">
+    ITACHI-<span>XMD</span>
+  </div>
+  <p>© 2026 ITACHI-XMD — Propulsé par <span style="color:var(--red2)">IBSACKO™</span> · CENTRAL HEX</p>
+</footer>
+
+<script>
+// L'URL de CE serveur (auto-détection)
+const API = window.location.origin;
+
+function switchTab(tab) {
+  ['pair','qr'].forEach(t => {
+    document.getElementById('tab-'+t).classList.toggle('active', t===tab);
+    document.getElementById(t+'-form').style.display = t===tab ? 'block' : 'none';
+  });
+}
+
+async function getPairCode() {
+  const phone = document.getElementById('phone').value.replace(/\D/g,'');
+  const err = document.getElementById('pair-err');
+  const spin = document.getElementById('pair-spin');
+  const txt = document.getElementById('pair-txt');
+  const btn = document.getElementById('pair-btn');
+  err.classList.remove('show');
+
+  if (!phone || phone.length < 8) {
+    err.textContent = '⚠ Entre un numéro valide (ex: 224621963059)';
+    err.classList.add('show'); return;
+  }
+
+  btn.disabled = true; spin.style.display='block'; txt.textContent='CONNEXION...';
+
+  try {
+    const res = await fetch(`${API}/pair?number=${phone}`);
+    const data = await res.json();
+
+    if (data.code && data.code !== 'Service Currently Unavailable') {
+      document.getElementById('pair-code').textContent = data.code;
+      document.getElementById('pair-result').classList.add('show');
+      txt.textContent = '✅ CODE REÇU — ATTENTE SESSION...';
+    } else {
+      throw new Error(data.error || 'Service indisponible');
+    }
+  } catch(e) {
+    err.textContent = '⚠ ' + (e.message || 'Erreur serveur. Réessaie.');
+    err.classList.add('show');
+    txt.textContent = '⚡ OBTENIR LE CODE';
+    btn.disabled = false;
+    spin.style.display='none';
+  }
+}
+
+async function getQRCode() {
+  const err = document.getElementById('qr-err');
+  const spin = document.getElementById('qr-spin');
+  const txt = document.getElementById('qr-txt');
+  const btn = document.getElementById('qr-btn');
+  err.classList.remove('show');
+
+  btn.disabled = true; spin.style.display='block'; txt.textContent='GÉNÉRATION...';
+
+  try {
+    const img = document.getElementById('qr-img');
+    img.src = `${API}/qr?t=${Date.now()}`;
+    img.onload = () => {
+      document.getElementById('qr-wrap').classList.add('show');
+      document.getElementById('qr-hint').classList.add('show');
+      txt.textContent = '🔄 ACTUALISER';
+      btn.disabled = false; spin.style.display='none';
+    };
+    img.onerror = () => {
+      throw new Error('Impossible de charger le QR');
+    };
+  } catch(e) {
+    err.textContent = '⚠ ' + (e.message || 'Erreur serveur');
+    err.classList.add('show');
+    txt.textContent = '📷 GÉNÉRER QR CODE';
+    btn.disabled = false; spin.style.display='none';
+  }
+}
+
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'});
+  });
+});
+</script>
+</body>
+</html>
