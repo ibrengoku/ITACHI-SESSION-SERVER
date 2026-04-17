@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: itachi-xmd-session
+    env: node
+    buildCommand: npm install
+    startCommand: node index.js
+    envVars:
+      - key: PORT
+        value: 3000
+    healthCheckPath: /ping

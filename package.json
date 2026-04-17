@@ -1,0 +1,20 @@
+{
+  "name": "itachi-xmd-session",
+  "version": "2.0.0",
+  "description": "ITACHI-XMD Session Generator by IBSACKO™",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "npm:wileys",
+    "express": "^4.18.2",
+    "pino": "^8.14.1",
+    "qrcode": "^1.5.3",
+    "cors": "^2.8.5",
+    "jimp": "^0.16.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
